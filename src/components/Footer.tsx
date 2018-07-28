@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { scroller } from 'react-scroll';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
@@ -8,16 +9,19 @@ import Column from './Column';
 
 interface Props {
   socialNetworks: Array<{ name: string; url: string; icon: string }>;
-  scrollTo: (event: React.MouseEvent<HTMLAnchorElement>) => void;
 }
 
 class Footer extends React.Component<Props> {
+  scrollToTop = () => {
+    scroller.scrollTo('home', { smooth: true });
+  };
+
   readonly renderSocialList = () =>
     this.props.socialNetworks.map(({ name, url, icon }) => (
       <SocialLinkItem key={name}>
-        <Link href={url}>
+        <SocialLink href={url}>
           <FontAwesomeIcon icon={['fab', icon as IconName]} />
-        </Link>
+        </SocialLink>
       </SocialLinkItem>
     ));
 
@@ -25,25 +29,25 @@ class Footer extends React.Component<Props> {
     return (
       <FooterSection>
         <Row>
-          <GoToTopBtn title="Back to Top" href="#home" onClick={this.props.scrollTo}>
+          <GoToTopBtn title="Back to Top" onClick={this.scrollToTop}>
             <FontAwesomeIcon icon="chevron-circle-up" size="3x" />
           </GoToTopBtn>
 
           <Column width={12}>
-            <SocialLinks>{this.renderSocialList()}</SocialLinks>
+            <SocialLinkList>{this.renderSocialList()}</SocialLinkList>
 
             <CopyrightList>
               <CopyrightItem>
                 &copy; Copyright 2018{' '}
-                <Link title="Ryan Johnson" href="http://www.ryan-johnson.co/">
+                <SocialLink title="Ryan Johnson" href="http://www.ryan-johnson.co/">
                   Ryan Johnson
-                </Link>
+                </SocialLink>
               </CopyrightItem>
               <CopyrightItem>
                 Inspired by{' '}
-                <Link title="Styleshout" href="http://www.styleshout.com/">
+                <SocialLink title="Styleshout" href="http://www.styleshout.com/">
                   Styleshout
-                </Link>
+                </SocialLink>
               </CopyrightItem>
             </CopyrightList>
           </Column>
@@ -65,7 +69,7 @@ const FooterSection = styled.footer`
   position: relative;
 `;
 
-const Link = styled.a`
+const SocialLink = styled.a`
   transition: all 0.2s ease-in-out;
   &,
   &:visited {
@@ -78,7 +82,7 @@ const Link = styled.a`
   }
 `;
 
-const SocialLinks = styled.ul`
+const SocialLinkList = styled.ul`
   margin: 18px 0 30px 0;
   padding: 0;
   font-size: 30px;
@@ -119,7 +123,7 @@ const CopyrightItem = styled.li`
   }
 `;
 
-const GoToTopBtn = styled(Link)`
+const GoToTopBtn = styled(SocialLink)`
   position: absolute;
   top: -30px;
   left: 50%;

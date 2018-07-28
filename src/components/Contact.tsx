@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Waypoint from 'react-waypoint';
+import { Element } from 'react-scroll';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -9,8 +9,6 @@ import { PersonalInfo } from '../../types';
 import Button from './Button';
 
 interface Props {
-  handleEnter: (name: string) => void;
-  setRef: (ref: HTMLElement) => void;
   data: PersonalInfo;
 }
 interface State {
@@ -50,123 +48,119 @@ class Contact extends React.Component<Props, State> {
     } = this.props.data;
 
     return (
-      <Waypoint bottomOffset="90%" onEnter={() => this.props.handleEnter('contact')}>
-        <div>
-          <ContactSection id="contact" innerRef={this.props.setRef}>
-            <SectionHeaderRow>
-              <HeaderColumn width={2}>
-                <Heading>
-                  <FontAwesomeIcon icon="envelope" size="2x" />
-                </Heading>
-              </HeaderColumn>
+      <ContactSection name="contact">
+        <SectionHeaderRow>
+          <HeaderColumn width={2}>
+            <Heading>
+              <FontAwesomeIcon icon="envelope" size="2x" />
+            </Heading>
+          </HeaderColumn>
 
-              <Column width={10}>
-                <LeadText>{contactMessage}</LeadText>
-              </Column>
-            </SectionHeaderRow>
+          <Column width={10}>
+            <LeadText>{contactMessage}</LeadText>
+          </Column>
+        </SectionHeaderRow>
 
-            <Row>
-              <Column width={8}>
-                <ContactForm action="" method="post" id="contact-form" name="contact-form">
-                  <fieldset>
-                    <div>
-                      <ContactLabel htmlFor="contactName">
-                        Name <Required>*</Required>
-                      </ContactLabel>
-                      <Input
-                        type="text"
-                        id="contactName"
-                        name="contactName"
-                        size={35}
-                        defaultValue=""
-                        onChange={this.handleChange}
-                      />
-                    </div>
-
-                    <div>
-                      <ContactLabel htmlFor="contactEmail">
-                        Email <Required>*</Required>
-                      </ContactLabel>
-                      <Input
-                        type="text"
-                        id="contactEmail"
-                        name="contactEmail"
-                        size={35}
-                        defaultValue=""
-                        onChange={this.handleChange}
-                      />
-                    </div>
-
-                    <div>
-                      <ContactLabel htmlFor="contactSubject">Subject</ContactLabel>
-                      <Input
-                        type="text"
-                        id="contactSubject"
-                        name="contactSubject"
-                        size={35}
-                        defaultValue=""
-                        onChange={this.handleChange}
-                      />
-                    </div>
-
-                    <div>
-                      <ContactLabel htmlFor="contactMessage">
-                        Message <Required>*</Required>
-                      </ContactLabel>
-                      <TextArea
-                        id="contactMessage"
-                        name="contactMessage"
-                        cols={50}
-                        rows={15}
-                        onChange={this.handleChange}
-                      />
-                    </div>
-
-                    <div>
-                      <SubmitButton>Submit</SubmitButton>
-                      <ImageLoader id="image-loader">
-                        <img src="images/loader.gif" alt="" />
-                      </ImageLoader>
-                    </div>
-                  </fieldset>
-                </ContactForm>
-
-                <WarningMessage id="message-warning"> Error boy</WarningMessage>
-                <SuccessMessage id="message-success">
-                  <FontAwesomeIcon icon="check-circle" style={{ marginRight: '10px' }} /> Message
-                  successfully sent! I will get back to you ASAP!<br />
-                </SuccessMessage>
-              </Column>
-
-              <FooterWidgetsColumn width={4}>
+        <Row>
+          <Column width={8}>
+            <ContactForm action="" method="post" id="contact-form" name="contact-form">
+              <fieldset>
                 <div>
-                  <ContactDetailsHeading>Contact Details</ContactDetailsHeading>
-                  <p>
-                    {name}
-                    <br />
-                    {city}
-                    <br />
-                    {state}, {zip}
-                    <br />
-                    <span>{phone}</span>
-                    <br />
-                    <span>
-                      <Link href={`mailto:${email}`}>{email}</Link>
-                    </span>
-                  </p>
+                  <ContactLabel htmlFor="contactName">
+                    Name <Required>*</Required>
+                  </ContactLabel>
+                  <Input
+                    type="text"
+                    id="contactName"
+                    name="contactName"
+                    size={35}
+                    defaultValue=""
+                    onChange={this.handleChange}
+                  />
                 </div>
-              </FooterWidgetsColumn>
-            </Row>
-          </ContactSection>
-        </div>
-      </Waypoint>
+
+                <div>
+                  <ContactLabel htmlFor="contactEmail">
+                    Email <Required>*</Required>
+                  </ContactLabel>
+                  <Input
+                    type="text"
+                    id="contactEmail"
+                    name="contactEmail"
+                    size={35}
+                    defaultValue=""
+                    onChange={this.handleChange}
+                  />
+                </div>
+
+                <div>
+                  <ContactLabel htmlFor="contactSubject">Subject</ContactLabel>
+                  <Input
+                    type="text"
+                    id="contactSubject"
+                    name="contactSubject"
+                    size={35}
+                    defaultValue=""
+                    onChange={this.handleChange}
+                  />
+                </div>
+
+                <div>
+                  <ContactLabel htmlFor="contactMessage">
+                    Message <Required>*</Required>
+                  </ContactLabel>
+                  <TextArea
+                    id="contactMessage"
+                    name="contactMessage"
+                    cols={50}
+                    rows={15}
+                    onChange={this.handleChange}
+                  />
+                </div>
+
+                <div>
+                  <SubmitButton>Submit</SubmitButton>
+                  <ImageLoader id="image-loader">
+                    <img src="images/loader.gif" alt="" />
+                  </ImageLoader>
+                </div>
+              </fieldset>
+            </ContactForm>
+
+            <WarningMessage id="message-warning"> Error boy</WarningMessage>
+            <SuccessMessage id="message-success">
+              <FontAwesomeIcon icon="check-circle" style={{ marginRight: '10px' }} /> Message
+              successfully sent! I will get back to you ASAP!<br />
+            </SuccessMessage>
+          </Column>
+
+          <FooterWidgetsColumn width={4}>
+            <div>
+              <ContactDetailsHeading>Contact Details</ContactDetailsHeading>
+              <p>
+                {name}
+                <br />
+                {city}
+                <br />
+                {state}, {zip}
+                <br />
+                <span>{phone}</span>
+                <br />
+                <span>
+                  <Link href={`mailto:${email}`}>{email}</Link>
+                </span>
+              </p>
+            </div>
+          </FooterWidgetsColumn>
+        </Row>
+      </ContactSection>
     );
   }
 }
 
 export default Contact;
 
-const ContactSection = styled.section`
+const ContactSection = styled(Element)`
   background: #191919;
   padding-top: 96px;
   padding-bottom: 102px;

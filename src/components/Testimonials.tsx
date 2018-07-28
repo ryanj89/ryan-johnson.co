@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Waypoint from 'react-waypoint';
+import { Element } from 'react-scroll';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -8,8 +8,6 @@ import Column from './Column';
 import { TestimonialInfo } from '../../types';
 
 interface Props {
-  handleEnter: (name: string) => void;
-  setRef: (ref: HTMLElement) => void;
   data: TestimonialInfo[];
 }
 class Testimonials extends React.Component<Props> {
@@ -23,31 +21,27 @@ class Testimonials extends React.Component<Props> {
 
   render(): React.ReactNode {
     return (
-      <Waypoint bottomOffset="90%" onEnter={() => this.props.handleEnter('testimonials')}>
-        <div>
-          <TestimonialSection id="testimonials" className="overlay" innerRef={this.props.setRef}>
-            <TextContainer>
-              <Row>
-                <HeaderColumn width={2}>
-                  <Heading>
-                    <FontAwesomeIcon icon="quote-left" size="2x" />
-                  </Heading>
-                </HeaderColumn>
-                <Column width={10} style={{ zoom: 1, position: 'relative' }}>
-                  <Slides>{this.renderTestimonials()}</Slides>
-                </Column>
-              </Row>
-            </TextContainer>
-          </TestimonialSection>
-        </div>
-      </Waypoint>
+      <TestimonialSection name="testimonials" className="overlay">
+        <TextContainer>
+          <Row>
+            <HeaderColumn width={2}>
+              <Heading>
+                <FontAwesomeIcon icon="quote-left" size="2x" />
+              </Heading>
+            </HeaderColumn>
+            <Column width={10} style={{ zoom: 1, position: 'relative' }}>
+              <Slides>{this.renderTestimonials()}</Slides>
+            </Column>
+          </Row>
+        </TextContainer>
+      </TestimonialSection>
     );
   }
 }
 
 export default Testimonials;
 
-const TestimonialSection = styled.section`
+const TestimonialSection = styled(Element)`
   background: #1f1f1f url('/images/testimonial-bg.jpg') no-repeat center center;
   background-size: cover;
   background-attachment: fixed;

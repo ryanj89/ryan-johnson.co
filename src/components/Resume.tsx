@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Waypoint from 'react-waypoint';
+import { Element } from 'react-scroll';
 import styled from 'styled-components';
 
 import { ResumeInfo } from '../../types';
@@ -7,8 +7,6 @@ import Column from './Column';
 import Row from './Row';
 
 interface Props {
-  setRef: (ref: HTMLElement) => void;
-  handleEnter: (name: string) => void;
   data: ResumeInfo;
 }
 class Resume extends React.Component<Props> {
@@ -51,56 +49,52 @@ class Resume extends React.Component<Props> {
   render(): React.ReactNode {
     const { skillsTagline } = this.props.data;
     return (
-      <Waypoint bottomOffset="50%" onEnter={() => this.props.handleEnter('resume')}>
-        <div>
-          <ResumeSection id="resume" innerRef={this.props.setRef}>
-            <Education>
-              <HeaderColumn width={3}>
-                <Heading>
-                  <span>Education</span>
-                </Heading>
-              </HeaderColumn>
+      <ResumeSection name="resume">
+        <Education>
+          <HeaderColumn width={3}>
+            <Heading>
+              <span>Education</span>
+            </Heading>
+          </HeaderColumn>
 
-              <MainColumn width={9}>
-                <Row>
-                  <Column width={12}>{this.renderEducation()}</Column>
-                </Row>
-              </MainColumn>
-            </Education>
-
-            <Work>
-              <HeaderColumn width={3}>
-                <Heading>
-                  <span>Work</span>
-                </Heading>
-              </HeaderColumn>
-              <MainColumn width={9}>{this.renderWork()}</MainColumn>
-            </Work>
-
+          <MainColumn width={9}>
             <Row>
-              <HeaderColumn width={3}>
-                <Heading>
-                  <span>Skills</span>
-                </Heading>
-              </HeaderColumn>
-
-              <div>
-                <MainColumn width={9}>
-                  <SubText>{skillsTagline}</SubText>
-                </MainColumn>
-                <ul className="cf">{this.renderSkillsList()}</ul>
-              </div>
+              <Column width={12}>{this.renderEducation()}</Column>
             </Row>
-          </ResumeSection>
-        </div>
-      </Waypoint>
+          </MainColumn>
+        </Education>
+
+        <Work>
+          <HeaderColumn width={3}>
+            <Heading>
+              <span>Work</span>
+            </Heading>
+          </HeaderColumn>
+          <MainColumn width={9}>{this.renderWork()}</MainColumn>
+        </Work>
+
+        <Row>
+          <HeaderColumn width={3}>
+            <Heading>
+              <span>Skills</span>
+            </Heading>
+          </HeaderColumn>
+
+          <div>
+            <MainColumn width={9}>
+              <SubText>{skillsTagline}</SubText>
+            </MainColumn>
+            <ul className="cf">{this.renderSkillsList()}</ul>
+          </div>
+        </Row>
+      </ResumeSection>
     );
   }
 }
 
 export default Resume;
 
-const ResumeSection = styled.section`
+const ResumeSection = styled(Element)`
   /* background: #fff; */
   padding-top: 90px;
   padding-bottom: 72px;

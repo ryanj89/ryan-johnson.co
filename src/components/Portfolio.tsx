@@ -1,15 +1,13 @@
 import * as React from 'react';
+import { Element } from 'react-scroll';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { PortfolioInfo } from '../../types';
 import Row from './Row';
 import Column from './Column';
-import Waypoint from 'react-waypoint';
 
 interface Props {
-  setRef: (ref: HTMLElement) => void;
-  handleEnter: (name: string) => void;
   data: PortfolioInfo;
 }
 
@@ -36,27 +34,23 @@ class Portfolio extends React.Component<Props> {
 
   render(): React.ReactNode {
     return (
-      <Waypoint bottomOffset="90%" onEnter={() => this.props.handleEnter('portfolio')}>
-        <div>
-          <PortfolioSection id="portfolio" innerRef={this.props.setRef}>
-            <Row>
-              <Column width={12} collapsed>
-                <Heading>Check out some of my work</Heading>
-                <div id="portfolio-wrapper" className="cf">
-                  {this.renderProjects()}
-                </div>
-              </Column>
-            </Row>
-          </PortfolioSection>
-        </div>
-      </Waypoint>
+      <PortfolioSection name="portfolio">
+        <Row>
+          <Column width={12} collapsed>
+            <Heading>Check out some of my work</Heading>
+            <div id="portfolio-wrapper" className="cf">
+              {this.renderProjects()}
+            </div>
+          </Column>
+        </Row>
+      </PortfolioSection>
     );
   }
 }
 
 export default Portfolio;
 
-const PortfolioSection = styled.section`
+const PortfolioSection = styled(Element)`
   background: #ebeeee;
   padding-top: 90px;
   padding-bottom: 60px;

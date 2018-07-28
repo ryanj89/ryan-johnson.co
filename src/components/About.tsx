@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Element } from 'react-scroll';
 import Fade from 'react-reveal/Fade';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,11 +8,8 @@ import { PersonalInfo } from '../../types';
 import Row from './Row';
 import Column from './Column';
 import Button from './Button';
-import Waypoint from 'react-waypoint';
 
 interface AboutProps {
-  setRef: (ref: HTMLElement) => void;
-  handleEnter: (name: string) => void;
   data: PersonalInfo;
 }
 
@@ -31,54 +29,50 @@ class About extends React.Component<AboutProps> {
     const emailLink = `mailto:${email}`;
 
     return (
-      <Waypoint topOffset="50%" bottomOffset="80%" onEnter={() => this.props.handleEnter('about')}>
-        <div>
-          <AboutWrapper id="about" innerRef={this.props.setRef}>
-            <Row>
-              <Column width={3}>
-                <Fade>
-                  <ProfilePic src={profileImg} alt="Ryan Johnson Profile Picture" />
-                </Fade>
-              </Column>
-              <Column width={9} style={{ paddingRight: '5%' }}>
-                <Fade right cascade duration={2000}>
-                  <HeadingText>About Me</HeadingText>
+      <AboutWrapper name="about">
+        <Row>
+          <Column width={3}>
+            <Fade>
+              <ProfilePic src={profileImg} alt="Ryan Johnson Profile Picture" />
+            </Fade>
+          </Column>
+          <Column width={9} style={{ paddingRight: '5%' }}>
+            <Fade right cascade duration={2000}>
+              <HeadingText>About Me</HeadingText>
 
-                  <Text>{bio}</Text>
-                  <Row>
-                    <Column width={5}>
-                      <HeadingText>Contact Details</HeadingText>
-                      <Text>
-                        <span>{name}</span>
-                        <br />
-                        <span>
-                          {city}, {state} {zip}
-                        </span>
-                        <br />
-                        <span>{phone}</span>
-                        <br />
-                        <span>
-                          <a href={emailLink}>{email}</a>
-                        </span>
-                      </Text>
-                    </Column>
-                    <Column width={7} style={{ paddingTop: '6px' }}>
-                      <Text>
-                        <DownloadButton href={resumeDownloadUrl} target="_blank">
-                          <FontAwesomeIcon
-                            icon="download"
-                            style={{ marginRight: '15px', fontSize: '20px' }}
-                          />Download Resume
-                        </DownloadButton>
-                      </Text>
-                    </Column>
-                  </Row>
-                </Fade>
-              </Column>
-            </Row>
-          </AboutWrapper>
-        </div>
-      </Waypoint>
+              <Text>{bio}</Text>
+              <Row>
+                <Column width={5}>
+                  <HeadingText>Contact Details</HeadingText>
+                  <Text>
+                    <span>{name}</span>
+                    <br />
+                    <span>
+                      {city}, {state} {zip}
+                    </span>
+                    <br />
+                    <span>{phone}</span>
+                    <br />
+                    <span>
+                      <a href={emailLink}>{email}</a>
+                    </span>
+                  </Text>
+                </Column>
+                <Column width={7} style={{ paddingTop: '6px' }}>
+                  <Text>
+                    <DownloadButton href={resumeDownloadUrl} target="_blank">
+                      <FontAwesomeIcon
+                        icon="download"
+                        style={{ marginRight: '15px', fontSize: '20px' }}
+                      />Download Resume
+                    </DownloadButton>
+                  </Text>
+                </Column>
+              </Row>
+            </Fade>
+          </Column>
+        </Row>
+      </AboutWrapper>
     );
   }
 }
@@ -89,7 +83,7 @@ export default About;
 // tslint:disable-next-line:no-any
 const DownloadButton: any = Button.withComponent('a');
 
-const AboutWrapper = styled.section`
+const AboutWrapper = styled(Element)`
   background: #2b2b2b;
   padding-top: 96px;
   padding-bottom: 66px;

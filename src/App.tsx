@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { hot } from 'react-hot-loader';
+import { Events, scrollSpy } from 'react-scroll';
 import axios from 'axios';
 
 import { ResumeData } from '../types';
@@ -12,39 +13,38 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 
 interface State {
-  activeLink: string;
-  resumeData: ResumeData | null;
+  resumeData?: ResumeData;
 }
 
 // TODO: Setup ReactGA
 class App extends React.Component<{}, State> {
+  state: State = {};
   navRef = React.createRef<HTMLElement>();
-  sectionRefs: Map<string, HTMLElement> = new Map<string, HTMLElement>();
-  scrollTimeout: NodeJS.Timer;
-
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      activeLink: 'home',
-      resumeData: null,
-    };
-  }
+  homeRef = React.createRef<HTMLDivElement>();
 
   componentDidMount() {
     this.getResumeData();
+    Events.scrollEvent.register('begin', (to, element) => {
+      console.log('begin', to, element);
+    });
+    Events.scrollEvent.register('end', (to, element) => {
+      console.log('end', to, element);
+      if (to) {
+        window.location.hash = '#' + to;
+      }
+    });
+    scrollSpy.update();
     window.addEventListener('scroll', this.handleScroll);
   }
 
   componentWillUnmount() {
+    Events.scrollEvent.remove('begin');
+    Events.scrollEvent.remove('end');
     window.removeEventListener('scroll', this.handleScroll);
   }
 
-  readonly setRef = (ref: HTMLElement) => {
-    this.sectionRefs.set(ref.id, ref);
-  };
-
   readonly handleScroll = () => {
-    const h = this.sectionRefs.get('home')!.clientHeight;
+    const h = this.homeRef.current!.clientHeight;
     const navRef = this.navRef.current!;
     const y = window.scrollY;
 
@@ -53,26 +53,15 @@ class App extends React.Component<{}, State> {
     } else {
       if (y < h * 0.2) {
         navRef.classList.remove('opaque');
-        navRef.style.opacity = '1';
-        this.setState({ activeLink: 'home' });
       } else {
         navRef.classList.add('opaque');
-        navRef.style.opacity = '1';
       }
+      navRef.style.opacity = '1';
     }
   };
 
-  scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    const sectionName = e.currentTarget.hash.substr(1);
-    const ref = this.sectionRefs.get(sectionName);
-    if (ref) {
-      ref.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
-  // TODO:
   getResumeData = async () => {
+    // TODO: cleanup
     try {
       const load = document.getElementById('siteLoading');
       const { data } = await axios.get('/resume.json', { responseType: 'json' });
@@ -86,31 +75,22 @@ class App extends React.Component<{}, State> {
     }
   };
 
-  handleEnter = (name: string) => {
-    this.setState({ activeLink: name });
-  };
-
   render(): React.ReactNode {
     if (!this.state.resumeData) {
       return null;
     }
+
     const { personal, resume, portfolio, testimonials } = this.state.resumeData;
     return (
-      <div>
-        <Header
-          data={personal}
-          activeLink={this.state.activeLink}
-          scrollTo={this.scrollToSection}
-          navRef={this.navRef}
-          setRef={this.setRef}
-        />
-        <About data={personal} setRef={this.setRef} handleEnter={this.handleEnter} />
-        <Resume data={resume} setRef={this.setRef} handleEnter={this.handleEnter} />
-        <Portfolio data={portfolio} setRef={this.setRef} handleEnter={this.handleEnter} />
-        <Testimonials data={testimonials} setRef={this.setRef} handleEnter={this.handleEnter} />
-        <Contact data={personal} setRef={this.setRef} handleEnter={this.handleEnter} />
-        <Footer socialNetworks={personal.socialNetworks} scrollTo={this.scrollToSection} />
-      </div>
+      <>
+        <Header data={personal} homeRef={this.homeRef} navRef={this.navRef} />
+        <About data={personal} />
+        <Resume data={resume} />
+        <Portfolio data={portfolio} />
+        <Testimonials data={testimonials} />
+        <Contact data={personal} />
+        <Footer socialNetworks={personal.socialNetworks} />
+      </>
     );
   }
 }

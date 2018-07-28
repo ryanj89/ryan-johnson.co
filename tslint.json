@@ -10,8 +10,8 @@
     "member-access": false,
     "jsx-no-lambda": false,
     "interface-name": false,
-    "jsx-boolean-value": false,
-    "no-any": true
+    "jsx-boolean-value": false
+    // "no-any": true
   },
   "linterOptions": {
     "exclude": ["config/**/*.js", "node_modules/**/*.ts"]
