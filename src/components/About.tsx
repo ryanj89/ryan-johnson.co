@@ -31,7 +31,7 @@ class About extends React.Component<AboutProps> {
     const emailLink = `mailto:${email}`;
 
     return (
-      <Waypoint bottomOffset="90%" onEnter={() => this.props.handleEnter('about')}>
+      <Waypoint topOffset="50%" bottomOffset="80%" onEnter={() => this.props.handleEnter('about')}>
         <div>
           <AboutWrapper id="about" innerRef={this.props.setRef}>
             <Row>

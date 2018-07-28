@@ -11,16 +11,16 @@ interface HeaderProps {
   setRef: (ref: HTMLElement) => void;
   scrollTo: (event: React.MouseEvent<HTMLAnchorElement>) => void;
   data: PersonalInfo;
-  innerRef?: () => void;
+  activeLink: string;
 }
 
 class Header extends React.Component<HeaderProps> {
   readonly renderNetworks = () =>
     this.props.data.socialNetworks.map(({ name, url, icon }) => (
       <SocialListItem key={name}>
-        <a href={url} target="_blank">
+        <Link href={url} target="_blank">
           <FontAwesomeIcon icon={['fab', icon as IconName]} />
-        </a>
+        </Link>
       </SocialListItem>
     ));
 
@@ -36,79 +36,70 @@ class Header extends React.Component<HeaderProps> {
       },
       setRef,
       scrollTo,
+      activeLink,
     } = this.props;
 
     return (
-      <div ref={this.props.innerRef}>
-        <HeaderWrapper id="home" className="overlay" innerRef={setRef}>
-          <Navbar id="navbar" innerRef={this.props.navRef}>
-            <MobileBtn href="#navbar" title="Show Navbar">
-              Show Navbar
-            </MobileBtn>
-            <MobileBtn href="#home" title="Hide Navbar">
-              Hide Navbar
-            </MobileBtn>
+      <HeaderWrapper id="home" innerRef={setRef}>
+        <Navbar id="navbar" innerRef={this.props.navRef}>
+          <MobileBtn href="#navbar" title="Show Navbar">
+            Show Navbar
+          </MobileBtn>
+          <MobileBtn href="#home" title="Hide Navbar">
+            Hide Navbar
+          </MobileBtn>
 
-            <NavList id="nav">
-              <NavListItem className="current">
-                <a href="#home" onClick={scrollTo}>
-                  Home
-                </a>
-              </NavListItem>
-              <NavListItem>
-                <a href="#about" onClick={scrollTo}>
-                  About
-                </a>
-              </NavListItem>
-              <NavListItem>
-                <a href="#resume" onClick={scrollTo}>
-                  Resume
-                </a>
-              </NavListItem>
-              <NavListItem>
-                <a href="#portfolio" onClick={scrollTo}>
-                  Portfolio
-                </a>
-              </NavListItem>
-              <NavListItem>
-                <a href="#testimonials" onClick={scrollTo}>
-                  Testimonials
-                </a>
-              </NavListItem>
-              <NavListItem>
-                <a href="#contact" onClick={scrollTo}>
-                  Contact
-                </a>
-              </NavListItem>
-              {/* <NavListItem>
-              <a href="https://ryan-johnson.blog">Blog</a>
-            </NavListItem> */}
-            </NavList>
-          </Navbar>
+          <ul id="nav">
+            <NavListItem current={activeLink === 'home'}>
+              <a href="#home" onClick={scrollTo}>
+                Home
+              </a>
+            </NavListItem>
+            <NavListItem current={activeLink === 'about'}>
+              <a href="#about" onClick={scrollTo}>
+                About
+              </a>
+            </NavListItem>
+            <NavListItem current={activeLink === 'resume'}>
+              <a href="#resume" onClick={scrollTo}>
+                Resume
+              </a>
+            </NavListItem>
+            <NavListItem current={activeLink === 'portfolio'}>
+              <a href="#portfolio" onClick={scrollTo}>
+                Portfolio
+              </a>
+            </NavListItem>
+            <NavListItem current={activeLink === 'testimonials'}>
+              <a href="#testimonials" onClick={scrollTo}>
+                Testimonials
+              </a>
+            </NavListItem>
+            <NavListItem title="contact" current={activeLink === 'contact'}>
+              <a href="#contact" onClick={scrollTo}>
+                Contact
+              </a>
+            </NavListItem>
+          </ul>
+        </Navbar>
 
-          <Banner>
-            <BannerText>
-              <Heading>{name}</Heading>
-              <SubHeading>
-                I'm an{' '}
-                <span>
-                  {city}, {state}
-                </span>{' '}
-                based <span>{occupation}</span>. {description}
-                <span>{degree}</span> from <span>{school}</span>.
-              </SubHeading>
-              <hr />
-              <SocialList>{this.renderNetworks()}</SocialList>
-            </BannerText>
-          </Banner>
+        <Banner>
+          <Heading>{name}</Heading>
+          <SubHeading>
+            I'm an{' '}
+            <span>
+              {city}, {state}
+            </span>{' '}
+            based <span>{occupation}</span>. {description}
+            <span>{degree}</span> from <span>{school}</span>.
+          </SubHeading>
+          <SocialList>{this.renderNetworks()}</SocialList>
+        </Banner>
 
-          <ScrolldownBtn>
-            <a href="#about" onClick={this.props.scrollTo}>
-              <FontAwesomeIcon icon="chevron-circle-down" />
-            </a>
-          </ScrolldownBtn>
-        </HeaderWrapper>
-      </div>
+        <ScrolldownBtn href="#about" onClick={scrollTo}>
+          <FontAwesomeIcon icon="chevron-circle-down" />
+        </ScrolldownBtn>
+      </HeaderWrapper>
     );
   }
 }
@@ -126,11 +117,7 @@ const HeaderWrapper = styled.header`
   overflow: hidden;
   z-index: 1;
 
-  &.overlay {
-    position: relative;
-  }
-
-  &.overlay:after {
+  &:after {
     z-index: -1;
     position: absolute;
     content: '';
@@ -156,19 +143,6 @@ const Banner = styled(Row)`
   vertical-align: middle;
   width: 85%;
   padding-bottom: 30px;
-  /* margin: 0 auto; */
-  /* text-align: center; */
-`;
-
-const BannerText = styled.div`
-  width: 100%;
-
-  hr {
-    width: 60%;
-    margin: 18px auto 24px auto;
-    /* border-color: #2f2d2e; */
-    border-color: rgba(150, 150, 150, 0.15);
-  }
 `;
 
 const Heading = styled.h1`
@@ -204,42 +178,32 @@ const SocialList = styled.ul`
 const SocialListItem = styled.li`
   display: inline-block;
   margin: 0 15px;
-  /* padding: 0; */
+`;
 
-  a {
-    color: #fff;
-  }
-  a:hover {
+const Link = styled.a`
+  transition: all 0.3s ease-in-out;
+  color: #fff;
+  &:hover {
     color: #11abb0;
   }
 `;
 
 /* Scrolldown button */
-const ScrolldownBtn = styled.p`
-  a {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    margin-left: -29px;
-    color: #fff;
-    display: block;
-    height: 42px;
-    width: 42px;
-    font-size: 42px;
-    line-height: 42px;
-    /* border-radius: 100%; */
-
-    transition: all 0.3s ease-in-out;
-  }
-  a:hover {
-    color: #11abb0;
-  }
+const ScrolldownBtn = styled(Link)`
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  margin-left: -29px;
+  display: block;
+  height: 42px;
+  width: 42px;
+  font-size: 42px;
+  line-height: 42px;
 `;
 
 const MobileBtn = styled.a``;
 
 const Navbar = styled.nav`
-  /* margin: 0 auto; */
   width: 100%;
   font: 12px 'Open Sans', sans-serif;
   font-weight: 700;
@@ -252,13 +216,6 @@ const Navbar = styled.nav`
 
   transition: opacity 0.3s ease-in-out;
 
-  ul {
-    margin: 0;
-    padding: 0;
-    /* border: none;
-    outline: none; */
-  }
-
   /* Hide toggle buttons */
   ${MobileBtn} {
     display: none;
@@ -269,16 +226,7 @@ const Navbar = styled.nav`
   }
 `;
 
-const NavList = styled.ul`
-  /* min-height: 48px; */
-  /* width: auto; */
-
-  /* Center align menu */
-  text-align: center;
-`;
-
 const NavListItem = styled.li`
-  /* position: relative; */
   list-style: none;
   display: inline-block;
   height: 48px;
@@ -289,18 +237,15 @@ const NavListItem = styled.li`
     padding: 8px 12px;
     line-height: 32px;
     text-decoration: none;
-    /* text-align: left; */
-    color: #fff;
+    color: ${(props: { current?: boolean }) => (props.current ? '#11abb0' : '#fff')};
 
     transition: color 0.2s ease-in-out;
-  }
-  a:active {
-    background-color: transparent;
-  }
 
-  &.current {
-    a {
-      color: #f06000;
+    &:hover {
+      color: #15e6ed;
+    }
+    &:active {
+      background-color: transparent;
     }
   }
 `;

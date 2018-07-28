@@ -3,20 +3,20 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 
-import { PersonalInfo } from '../../types';
 import Row from './Row';
 import Column from './Column';
 
 interface Props {
-  data: PersonalInfo;
+  socialNetworks: Array<{ name: string; url: string; icon: string }>;
+  scrollTo: (event: React.MouseEvent<HTMLAnchorElement>) => void;
 }
 
 class Footer extends React.Component<Props> {
   readonly renderSocialList = () =>
-    this.props.data.socialNetworks.map(network => (
-      <SocialLinkItem key={network.name}>
-        <Link href={network.url}>
-          <FontAwesomeIcon icon={['fab', network.icon as IconName]} />
+    this.props.socialNetworks.map(({ name, url, icon }) => (
+      <SocialLinkItem key={name}>
+        <Link href={url}>
+          <FontAwesomeIcon icon={['fab', icon as IconName]} />
         </Link>
       </SocialLinkItem>
     ));
@@ -25,6 +25,10 @@ class Footer extends React.Component<Props> {
     return (
       <FooterSection>
         <Row>
+          <GoToTopBtn title="Back to Top" href="#home" onClick={this.props.scrollTo}>
+            <FontAwesomeIcon icon="chevron-circle-up" size="3x" />
+          </GoToTopBtn>
+
           <Column width={12}>
             <SocialLinks>{this.renderSocialList()}</SocialLinks>
 
@@ -43,13 +47,6 @@ class Footer extends React.Component<Props> {
               </CopyrightItem>
             </CopyrightList>
           </Column>
-
-          {/* TODO: */}
-          <div id="go-top">
-            <Link className="smoothscroll" title="Back to Top" href="#home">
-              <i className="icon-up-open" />
-            </Link>
-          </div>
         </Row>
       </FooterSection>
     );
@@ -62,7 +59,6 @@ const FooterSection = styled.footer`
   background: #0f0f0f;
   padding-top: 48px;
   padding-bottom: 48px;
-  /* margin-bottom: 48px; */
   color: #303030;
   font-size: 14px;
   text-align: center;
@@ -70,6 +66,7 @@ const FooterSection = styled.footer`
 `;
 
 const Link = styled.a`
+  transition: all 0.2s ease-in-out;
   &,
   &:visited {
     color: #525252;
@@ -77,7 +74,7 @@ const Link = styled.a`
 
   &:hover,
   &:focus {
-    color: #fff;
+    color: #11abb0;
   }
 `;
 
@@ -119,5 +116,27 @@ const CopyrightItem = styled.li`
 
   &:first-child:before {
     display: none;
+  }
+`;
+
+const GoToTopBtn = styled(Link)`
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  margin-left: -30px;
+  font-size: 21px;
+  line-height: 60px;
+  z-index: 1;
+
+  &:before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 2px;
+    left: 2px;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background-color: #fff;
   }
 `;

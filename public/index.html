@@ -32,7 +32,7 @@
   <!-- FIXME: Better way to fix FOUT? -->
   <style>
     body {
-      background: #0f0f0f;
+      background: #000;
       font-family: 'Open Sans', sans-serif;
       font-family: 'Libre Baskerville', serif;
       margin: 0;
@@ -41,7 +41,7 @@
     }
 
     .siteLoading {
-      background-color: #111;
+      background-color: #000;
       width: 100%;
       height: 100%;
       position: fixed;
@@ -55,18 +55,71 @@
       opacity: 0;
     }
 
+    @keyframes orbit {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes trail {
+      0% {
+        box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+      }
+      5%,
+      95% {
+        box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+      }
+      10%,
+      59% {
+        box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+      }
+      20% {
+        box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em;
+      }
+      38% {
+        box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em;
+      }
+      100% {
+        box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+      }
+    }
+
     .siteLoading-frame {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      animation: fadeIn 436ms;
-      height: 98%;
+      height: 100%;
     }
 
-    .siteLoading-image {
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .logo {
       width: 112px;
       height: 112px;
       align-self: center;
+      transition: opacity 1s linear;
+      animation: fadeIn 1s linear;
+    }
+
+    .loader {
+      position: absolute;
+      left: calc(50% - 40px);
+      width: 1em;
+      height: 1em;
+      font-size: 80px;
+      border-radius: 50%;
+      color: #00FFCA;
+      animation: trail 1.7s infinite ease, orbit 1.7s infinite ease;
     }
   </style>
 </head>
@@ -76,12 +129,12 @@
     You need to enable JavaScript to run this app.
   </noscript>
 
-  <!-- TODO: Custom loader -->
-  <!-- <div id='siteLoading' class="siteLoading">
+  <div id='siteLoading' class="siteLoading">
     <div class="siteLoading-frame">
-      <img class="siteLoading-image" src="%PUBLIC_URL%/images/loader.gif" alt="loader" />
+      <div class="loader"></div>
+      <img class="logo" src="%PUBLIC_URL%/images/rynj-logo.png" alt="loader" />
     </div>
-  </div> -->
+  </div>
 
   <div id="root"></div>
   <!--

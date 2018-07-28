@@ -51,7 +51,7 @@ class Resume extends React.Component<Props> {
   render(): React.ReactNode {
     const { skillsTagline } = this.props.data;
     return (
-      <Waypoint bottomOffset="90%" onEnter={() => this.props.handleEnter('resume')}>
+      <Waypoint bottomOffset="50%" onEnter={() => this.props.handleEnter('resume')}>
         <div>
           <ResumeSection id="resume" innerRef={this.props.setRef}>
             <Education>

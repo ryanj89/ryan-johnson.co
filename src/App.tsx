@@ -2,8 +2,8 @@ import * as React from 'react';
 import { hot } from 'react-hot-loader';
 import axios from 'axios';
 
-import Header from './components/Header';
 import { ResumeData } from '../types';
+import Header from './components/Header';
 import About from './components/About';
 import Resume from './components/Resume';
 import Portfolio from './components/Portfolio';
@@ -12,6 +12,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 
 interface State {
+  activeLink: string;
   resumeData: ResumeData | null;
 }
 
@@ -24,6 +25,7 @@ class App extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props);
     this.state = {
+      activeLink: 'home',
       resumeData: null,
     };
   }
@@ -31,21 +33,14 @@ class App extends React.Component<{}, State> {
   componentDidMount() {
     this.getResumeData();
     window.addEventListener('scroll', this.handleScroll);
-    window.addEventListener('resize', this.handleResize);
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
-    window.removeEventListener('resize', this.handleResize);
   }
 
   readonly setRef = (ref: HTMLElement) => {
     this.sectionRefs.set(ref.id, ref);
-    console.log(this.sectionRefs);
-  };
-
-  readonly handleResize = () => {
-    // TODO:
   };
 
   readonly handleScroll = () => {
@@ -59,6 +54,7 @@ class App extends React.Component<{}, State> {
       if (y < h * 0.2) {
         navRef.classList.remove('opaque');
         navRef.style.opacity = '1';
+        this.setState({ activeLink: 'home' });
       } else {
         navRef.classList.add('opaque');
         navRef.style.opacity = '1';
@@ -66,50 +62,32 @@ class App extends React.Component<{}, State> {
     }
   };
 
-  afterScroll = (hash: string) => {
-    addEventListener('scroll', () => {
-      clearTimeout(this.scrollTimeout);
-      this.scrollTimeout = setTimeout(() => {
-        window.location.hash = hash;
-      }, 100);
-    });
-  };
-
   scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    const ref = this.sectionRefs.get(e.currentTarget.hash.substr(1));
-    console.log(ref);
+    const sectionName = e.currentTarget.hash.substr(1);
+    const ref = this.sectionRefs.get(sectionName);
     if (ref) {
       ref.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      this.afterScroll(e.currentTarget.hash);
     }
   };
 
+  // TODO:
   getResumeData = async () => {
     try {
-      // const load = document.getElementById('siteLoading');
+      const load = document.getElementById('siteLoading');
       const { data } = await axios.get('/resume.json', { responseType: 'json' });
       console.log('resume', data);
       this.setState({ resumeData: data });
-      // setTimeout(() => {
-      //   load!.outerHTML = '';
-      // }, 500);
+      setTimeout(() => {
+        load!.outerHTML = '';
+      }, 2000);
     } catch (err) {
       console.log('ERROR', err);
     }
   };
 
   handleEnter = (name: string) => {
-    console.log('enter');
-    const navbar = this.navRef.current;
-    if (navbar) {
-      const prevCurrentLink = navbar.querySelector('.current');
-      if (prevCurrentLink) {
-        prevCurrentLink!.classList.remove('current');
-        const activeLink = navbar.querySelector(`a[href="#${name}"]`);
-        activeLink!.parentElement!.classList.add('current');
-      }
-    }
+    this.setState({ activeLink: name });
   };
 
   render(): React.ReactNode {
@@ -121,6 +99,7 @@ class App extends React.Component<{}, State> {
       <div>
         <Header
           data={personal}
+          activeLink={this.state.activeLink}
           scrollTo={this.scrollToSection}
           navRef={this.navRef}
           setRef={this.setRef}
@@ -128,12 +107,9 @@ class App extends React.Component<{}, State> {
         <About data={personal} setRef={this.setRef} handleEnter={this.handleEnter} />
         <Resume data={resume} setRef={this.setRef} handleEnter={this.handleEnter} />
         <Portfolio data={portfolio} setRef={this.setRef} handleEnter={this.handleEnter} />
-        <Testimonials
-          data={testimonials}
-          setRef={this.setRef} /*  handleEnter={this.handleEnter} */
-        />
-        <Contact data={personal} setRef={this.setRef} /*  handleEnter={this.handleEnter} */ />
-        <Footer data={personal} />
+        <Testimonials data={testimonials} setRef={this.setRef} handleEnter={this.handleEnter} />
+        <Contact data={personal} setRef={this.setRef} handleEnter={this.handleEnter} />
+        <Footer socialNetworks={personal.socialNetworks} scrollTo={this.scrollToSection} />
       </div>
     );
   }
