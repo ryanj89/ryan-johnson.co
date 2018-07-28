@@ -1,0 +1,176 @@
+{
+  "personal": {
+    "name": "Ryan Johnson",
+    "occupation": "Web Developer / Software Engineer",
+    "description": "I recently finished the ",
+    "school": "Galvanize",
+    "degree": "Immersive Full-Stack Web Development Program",
+    "profilePic": "profile_pic.jpg",
+    "bio":
+      "I am a nerd and gamer at heart, with thirst for knowledge, the ability to pick up things quickly, and a passion for all things coding and computers. After recently graduating from the Galvanize Full-Stack Web Development program, I decided to move back to my home state of Florida to embark on a new journey in a brand-new career.",
+    "contactMessage":
+      "Think I'd be a good fit for your team or have a project in mind you'd like to collaborate on? Send me an email or use the form below to get in contact!",
+    "email": "ryanjohnsonconsulting@gmail.com",
+    "phone": "(407) 716-0240",
+    "address": {
+      "street": "Bloomingdale Drive",
+      "city": "Orlando",
+      "state": "FL",
+      "zip": "32828"
+    },
+    "websiteUrl": "http://www.ryan-johnson.co",
+    "resumeDownloadUrl": "https://drive.google.com/open?id=1bv-1uJwIKLVF-w_MqijabNee8B-XxyHS",
+    "socialNetworks": [
+      {
+        "name": "facebook",
+        "url": "http://facebook.com/ryanj89",
+        "icon": "facebook-f"
+      },
+      {
+        "name": "twitter",
+        "url": "http://twitter.com/ryanj89",
+        "icon": "twitter"
+      },
+      {
+        "name": "google-plus",
+        "url": "http://googleplus.com/ryanj89",
+        "icon": "google-plus-g"
+      },
+      {
+        "name": "linkedin",
+        "url": "https://www.linkedin.com/in/ryanj89/",
+        "icon": "linkedin-in"
+      },
+      {
+        "name": "instagram",
+        "url": "http://instagram.com/bndto",
+        "icon": "instagram"
+      },
+      {
+        "name": "github",
+        "url": "http://github.com/ryanj89",
+        "icon": "github"
+      }
+    ]
+  },
+  "resume": {
+    "education": [
+      {
+        "school": "Galvanize",
+        "degree": "Full-Stack Web Developer Certification",
+        "graduated": "May 2017",
+        "description":
+          "During my time in the full-time web development immersive program, I learned the fundamentals of web and software development. I had the opportunity to create many production-ready applications, both on the front-end and back-end, that were similar to what I would work on in a real work environment. I also learned to hone my technical soft skills with the help of the experienced instructors and peers. Futhermore, I was working alongside many startups and Fortune 500 companies while finishing my capstone project, and had many networking opportunities as part of my daily life at Galvanize."
+      }
+    ],
+    "work": [
+      {
+        "company": "Kymberly Group Payroll Solutions, Inc.",
+        "title": "Payroll Manager",
+        "years": "January 2010 - January 2017",
+        "description":
+          "\u25CF\tHandle 1200 employees and 55 client payrolls \n\u25CF\tProcess and maintain employee documents \n\u25CF\tTrain and supervise payroll specialists and verify accuracy of payrolls \n\u25CF\tProvide customer service to clients \n\u25CF\tMaintain and remit child support deductions \n\u25CF\tPrepare bank deposits \n\u25CF\tDevelop and streamline various company processes (workers' compensation reporting, daily payroll process scheduling) \n\u25CF\tInstrumental in growing company from inception"
+      },
+      {
+        "company": "INFINITI Employment Solutions, Inc.",
+        "title": "Administrative Assistant",
+        "years": "May 2007 - January 2017",
+        "description":
+          "\u25CF\tEnter hours into JKM (payroll software) and follow up on missing timecards \n\u25CF\tPrint paychecks and verify employee hours \n\u25CF\tClose out weekly payroll and print reports \n\u25CF\tPrepare client invoices \n\u25CF\tRecord client payments and prepare bank deposits \n\u25CF\tProcess Accounts Payable through QuickBooks \n\u25CF\tMaintain and remit child support deductions"
+      }
+    ],
+    "skillsTagline":
+      "I love playing around with new technologies but this is a list of the ones that I have invested the most time",
+    "skills": [
+      {
+        "name": "C#",
+        "description":
+          "PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT",
+        "icon": "c-sharp.svg"
+      },
+      {
+        "name": "Docker",
+        "description":
+          "PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT",
+        "icon": "docker.svg"
+      },
+      {
+        "name": "JavaScript",
+        "description":
+          "PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT",
+        "icon": "javascript.svg"
+      },
+      {
+        "name": "PostgreSQL",
+        "description":
+          "PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT",
+        "icon": "postgresql.svg"
+      },
+      {
+        "name": "Redis",
+        "description":
+          "PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT",
+        "icon": "redis.svg"
+      },
+      {
+        "name": "TypeScript",
+        "description":
+          "PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT",
+        "icon": "typescript.svg"
+      },
+      {
+        "name": "Webpack",
+        "description":
+          "PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT",
+        "icon": "webpack.svg"
+      },
+      {
+        "name": "Git",
+        "description":
+          "I use Git for all of my projects so far. I have used Git for version control in small teams and have toyed around with contributing to Open Source Projects.",
+        "icon": "git.svg"
+      },
+      {
+        "name": "React",
+        "description":
+          "I am fairly new to React and really did not like it at first. It has grown on me though and I will continue to use it going forward. I have built a ReactJS based resume-website template (link below in portfolio) which I used as a starting point for this personal site.",
+        "icon": "react.svg"
+      },
+      {
+        "name": "NodeJS",
+        "description":
+          "NodeJS is my server-side scripting language of choice. The bulk of my experience with it has been in conjunction with MeteorJS-based projects",
+        "icon": "node-js.svg"
+      },
+      {
+        "name": "Heroku",
+        "description":
+          "I use Heroku as my hosting platform for most of my projects because so far they are all unpaid and their free tier is convenient. I also appreciate its integration with Github for such simple deployment.",
+        "icon": "heroku.svg"
+      }
+    ]
+  },
+  "portfolio": {
+    "projects": [
+      {
+        "title": "WeDJ",
+        "category": "Become a youtube DJ with your friends!",
+        "image": "wedj.png",
+        "url": "https://wedj-youtube.firebaseapp.com/"
+      },
+      {
+        "title": "WeDJ2",
+        "category": "Become a youtube DJ with your friends!",
+        "image": "wedj.png",
+        "url": "https://wedj-youtube.firebaseapp.com/"
+      }
+    ]
+  },
+  "testimonials": [
+    {
+      "text":
+        "R.J. has an excellent grasp on how to improve workflow by analyzing a teams strengths and weaknesses in the context of a project. He is a effective and warm teacher who makes it easy for those around him to grow in their positions as programmers. R.J. is not only an astute programmer, but also an excellent teammate.",
+      "user": "Sara King - Developer at Vertafore"
+    }
+  ]
+}

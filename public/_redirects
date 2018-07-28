@@ -1,0 +1,2 @@
+# Redirect default Netlify subdomain to primary domain
+http://epic-carson-d9ca24.netlify.com/* http://ryan-johnson.co/:splat 301!
